@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Spring dnd tools - Army Form </title>
+
+    <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/3.3.5/css/bootstrap.min.css}"
+          rel="stylesheet" media="screen" />
+
+    <script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.min.js"
+            th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"></script>
+
+    <link href="../static/css/spring-core.css"
+          th:href="@{css/spring-core.css}" rel="stylesheet" media="screen"/>
+
+</head>
+
+<body>
+<div class="container">
+
+    <h2>Army Details</h2>
+    <div>
+        <form class="form-horizontal" th:object="${army}" th:action="@{/army}" method="post">
+            <input type="hidden" th:field="*{armyId}"/>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Player id:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" th:field="*{playerId}"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Soldier id:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" th:field="*{soldierId}"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Army size:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" th:field="*{size}"/>
+                </div>
+            </div>
+
+            <div class="row">
+                <button type="submit" class="btn btn-default">Submit</button>
+            </div>
+        </form>
+    </div>
+    <div th:if="${not #lists.isEmpty(soldiers)}">
+        <h2> Soldier Lists</h2>
+        <table class="table table-striped">
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+
+            </tr>
+            <tr th:each="ch : ${soldiers}">
+                <td th:text="${ch.id}"></td>
+                <td th:text="${ch.name}"></td>
+            </tr>
+        </table>
+
+    </div>
+</div>
+
+</body>
+</html>

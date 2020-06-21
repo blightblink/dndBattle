@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Spring dnd tools - Soldier </title>
+
+    <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/3.3.5/css/bootstrap.min.css}"
+          rel="stylesheet" media="screen" />
+
+    <script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.min.js"
+            th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"></script>
+
+    <link href="../static/css/spring-core.css"
+          th:href="@{css/spring-core.css}" rel="stylesheet" media="screen"/>
+
+</head>
+
+<body>
+<div class="container">
+
+    <div class="row">
+        <div class="col-sm-6">
+            <h2>Show Soldier</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-8">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Soldier Id:</label>
+                    <div class="col-sm-10">
+                        <p class="form-control-static" th:text="${soldier.id}">Soldier Id</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Name:</label>
+                    <div class="col-sm-10">
+                        <p class="form-control-static" th:text="${soldier.name}">Name</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">BaB:</label>
+                    <div class="col-sm-10">
+                        <p class="form-control-static" th:text="${soldier.bab}">bab</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 sm-2 control-label">AC:</label>
+                    <div class="col-sm-10">
+                        <p class="form-control-static" th:text="${soldier.ac}">Ac</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 sm-2 control-label">DMG:</label>
+                    <div class="col-sm-10">
+                        <p class="form-control-static" th:text="${'D' + soldier.damage}">Damage</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 sm-2 control-label">HD:</label>
+                    <div class="col-sm-10">
+                        <p class="form-control-static" th:text="${soldier.hd}">HD</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 sm-2 control-label">Level:</label>
+                    <div class="col-sm-10">
+                        <p class="form-control-static" th:text="${soldier.level}">Level</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 sm-2 control-label">STR:</label>
+                    <div class="col-sm-10">
+                        <p class="form-control-static" th:text="${soldier.str}">STR</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 sm-2 control-label">AC:</label>
+                    <div class="col-sm-10">
+                        <p class="form-control-static" th:text="${soldier.dex}">DEX</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 sm-2 control-label">CON:</label>
+                    <div class="col-sm-10">
+                        <p class="form-control-static" th:text="${soldier.con}">CON</p>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <h3><a th:href="${'/soldiers'}">Soldiers List</a></h3>
+</div>
+</body>
+</html>

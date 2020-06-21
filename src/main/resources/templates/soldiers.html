@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Spring dnd tools - Soldiers </title>
+
+    <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/3.3.5/css/bootstrap.min.css}"
+          rel="stylesheet" media="screen" />
+
+    <script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.min.js"
+            th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"></script>
+
+    <link href="../static/css/spring-core.css"
+          th:href="@{css/spring-core.css}" rel="stylesheet" media="screen"/>
+
+</head>
+
+<body>
+<div class="container">
+    <div th:if="${not #lists.isEmpty(soldiers)}">
+        <h2> Soldier Lists</h2>
+        <table class="table table-striped">
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>BaB</th>
+                <th>HD</th>
+                <th>Level</th>
+                <th>AC</th>
+                <th>Dmg</th>
+                <th>STR</th>
+                <th>DEX</th>
+                <th>CON</th>
+                <th>List</th>
+
+            </tr>
+            <tr th:each="ch : ${soldiers}">
+                <td th:text="${ch.id}"></td>
+                <td th:text="${ch.name}"></td>
+                <td th:text="${ch.bab}"></td>
+                <td th:text="${ch.hd}"></td>
+                <td th:text="${ch.level}"></td>
+                <td th:text="${ch.ac}"></td>
+                <td th:text="${'D' + ch.damage}"></td>
+                <td th:text="${ch.str}"></td>
+                <td th:text="${ch.dex}"></td>
+                <td th:text="${ch.con}"></td>
+                <td> <a th:href="${'/soldier/' + ch.id}">View</a> </td>
+                <td> <a th:href="${'/soldier/edit/' + ch.id}">Edit</a> </td>
+                <td> <a th:href="${'/soldier/delete/' + ch.id}">Delete</a> </td>
+            </tr>
+        </table>
+
+    </div>
+    <div class="row">
+        <div class="col-sm-3">
+            <a th:href="${'/soldier/new'}"> New Soldier</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>
