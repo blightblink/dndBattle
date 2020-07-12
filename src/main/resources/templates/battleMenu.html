@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Spring dnd tools - Armies </title>
+    <title>Spring dnd tools - Battle </title>
 
     <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css"
           th:href="@{/webjars/bootstrap/3.3.5/css/bootstrap.min.css}"
@@ -18,25 +18,16 @@
 
 <body>
 <div class="container">
-    <div th:if="${not #lists.isEmpty(armies)}">
+    <div>
         <h2> Army Lists</h2>
         <table class="table table-striped">
             <tr>
-                <th>Id</th>
-                <th>Player id</th>
-                <th>Army size</th>
-                <th>Army Soldiers</th>
+                <th>Battle Menu</th>
 
             </tr>
-            <tr th:each="ch : ${armies}">
-                <td th:text="${ch.id}"></td>
-                <td th:text="${ch.playerId}"></td>
-                <td th:text="${ch.units.size()}"></td>
-                <!--<td th:text="${ch.units.get(0).getType()}"></td> FIX ME -->
-
-                <td> <a th:href="${'/army/' + ch.id}">View</a> </td>
-                <td> <a th:href="${'/army/edit/' + ch.id}">Edit</a> </td>
-                <td> <a th:href="${'/army/delete/' + ch.id}">Delete</a> </td>
+            <tr>
+                <td> <a th:href="${'/armies'}">View</a> </td>
+                <td> <a th:href="${'/soldiers'}">Edit</a> </td>
             </tr>
 
         </table>

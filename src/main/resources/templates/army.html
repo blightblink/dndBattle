@@ -49,10 +49,15 @@
                                 <th>Damage</th>
 
                             </tr>
+                            <!--<tr th:each="instance : ${analysis.instanceMap}">
+                                <td th:text="${instance.key}">keyvalue</td>
+                                <td th:text="${instance.value.numOfData}">num</td>
+                            </tr>-->
+
                             <tr th:each="unit : ${battleArmy.units}">
-                                <td th:text="${unit.getMaxHp()}"></td>
-                                <td th:text="${unit.getLevel()}"></td>
-                                <td th:text="${unit.getBaseWeapon()}"></td>
+                                <td th:text="${unit.value.getMaxHp()}"></td>
+                                <td th:text="${unit.value.getLevel()}"></td>
+                                <td th:text="${unit.value.getBaseWeapon()}"></td>
 
                             </tr>
                         </table>

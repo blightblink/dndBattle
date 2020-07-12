@@ -89,7 +89,7 @@ public class BattleArmiesController {
         return "redirect:/armies";
     }
 
-    @RequestMapping("/battle")
+    @RequestMapping("/battles")
     public String battle(){
         battleService.initializeArmies((List<BattleArmy>) battleArmyCreationService.listAll());
         battleService.beginTurn();
