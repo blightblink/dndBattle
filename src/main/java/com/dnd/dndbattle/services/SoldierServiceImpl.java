@@ -2,6 +2,7 @@ package com.dnd.dndbattle.services;
 
 import com.dnd.dndbattle.domain.Soldier;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -14,6 +15,13 @@ import java.util.Map;
 public class SoldierServiceImpl implements SoldierService{
 
     private Map<Integer, Soldier> soldiers = new HashMap<>();
+
+    private String csvPath;
+
+    @Value("${csvPath}")
+    public void setCsvPath(String csvPath) {
+        this.csvPath = csvPath;
+    }
 
     public SoldierServiceImpl() {
         loadSoldiers();

@@ -67,7 +67,11 @@ public class BattleArmiesController {
     @RequestMapping("/army/edit/{id}")
     public String editSoldier(@PathVariable Integer id, Model model) {
         BattleArmy army = battleArmyCreationService.getById(id);
-        Soldier soldier = soldierService.getByName(army.getUnits().get(0).getType());
+        Soldier soldier = null;
+        if(army.getUnits().get(1) != null){
+            soldier = soldierService.getByName(army.getUnits().get(1).getType());//FIXME the whole first unit thing
+        }
+
         ArmyFormDto dto = formDto.toArmyFormDto(army,soldier,army.getUnits().size());
 
         model.addAttribute("soldiers",soldierService.listAll());
@@ -89,14 +93,5 @@ public class BattleArmiesController {
         return "redirect:/armies";
     }
 
-    @RequestMapping("/battles")
-    public String battle(){
-        battleService.initializeArmies((List<BattleArmy>) battleArmyCreationService.listAll());
-        battleService.beginTurn();
-        battleService.playersInitiative(new NormalRound());
-        battleService.playersArmyOrder(new AllArmiesAttack());
-        battleService.battleRound();
 
-        return "armies";
-    }
 }

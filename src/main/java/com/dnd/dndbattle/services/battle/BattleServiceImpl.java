@@ -38,7 +38,7 @@ public class BattleServiceImpl implements BattleService {
 
     @Override
     public void beginTurn() {
-        currentTurn = new Turn.TurnBuilder(turn + 1);
+        currentTurn = new Turn.TurnBuilder(turn++);
         currentTurn.setArmyMap(armies.values().stream().flatMap( x-> x.stream()).collect(Collectors.toMap(BattleArmy::getId, Function.identity())));
     }
 
@@ -55,9 +55,10 @@ public class BattleServiceImpl implements BattleService {
 
     @Override
     public void battleRound(){
-        Turn turn = currentTurn.build();
-        BattleSimulator simulator = new BattleSimulator(turn);
+        Turn newTurn = currentTurn.build();
+        BattleSimulator simulator = new BattleSimulator(newTurn);
         simulator.battle();
+        turn++;
 
         logs.add(simulator.getTurnLogs());
 
@@ -72,8 +73,9 @@ public class BattleServiceImpl implements BattleService {
         return currentTurn;
     }
 
-    public List<TurnLogs> getLogs() {
-        return logs;
+    @Override
+    public TurnLogs getLogs() {
+        return logs.get(logs.size()-1);
     }
 }
 

@@ -16,4 +16,6 @@ public interface BattleService {
     void playersArmyOrder(AttackOrderStrategy strategy);
 
     void battleRound();
+
+    TurnLogs getLogs();
 }

@@ -23,9 +23,13 @@ public class BattleServiceImplTest {
     BattleServiceImpl battleService = new BattleServiceImpl();
     Map<Integer,BattleArmy> armies = new HashMap<>();
 
+    Map<Integer,BattleArmy> basicArmy = new HashMap<>();
+    BattleServiceImpl basicBattleService = new BattleServiceImpl();
+
     @Before
     public void init(){
-        createArmies();
+        createArmies(this.armies, 10);
+        createArmies(this.basicArmy, 1);
         battleService.initializeArmies(armies.values()
                 .stream().collect(Collectors.toList()));
         battleService.beginTurn();
@@ -52,15 +56,44 @@ public class BattleServiceImplTest {
             }
         }
 
-
     }
 
-    private void createArmies(){
+    @Test
+    public void battlePvP(){
+        basicBattleService.initializeArmies(basicArmy.values().stream().collect(Collectors.toList()));
+        basicBattleService.beginTurn();
+        basicBattleService.playersInitiative(new NormalRound());
+        basicBattleService.playersArmyOrder(new AllArmiesAttack());
+
+        for(;;){
+            basicBattleService.battleRound();
+            Turn turn = basicBattleService.getCurrentTurn().build();
+
+
+            if(turn.getArmyMap().values()
+                    .stream()
+                    .filter(i -> i.getUnits().size() >0)
+                    .count() > 1){
+                /*turn.getArmyMap().values().stream().forEach( i-> {
+                    System.out.println(" ----- army: " +  i.getId());
+                    i.getUnits().values().forEach( n -> System.out.println( "unit hp:" + n.getCurHp()));
+                });*/
+            } else{
+                TurnLogs y = basicBattleService.getLogs();
+                 y.getTurnLogging().forEach(t -> {
+                     System.out.println(t.getTriggeringArmy() + " - " +t.getSeverity() + " - " + t.getText());
+                 });
+                break;
+            }
+        }
+    }
+
+    private void createArmies(Map<Integer,BattleArmy> armies , int numberOfSoldiers){
         BattleArmy ba = new BattleArmy();
         ba.setId(1);
         ba.setPlayerId(1);
         Map<Integer,Unit> l = new HashMap<>();
-        for(int i= 0;i<10;i++) {
+        for(int i= 0;i<numberOfSoldiers;i++) {
             Soldier s1 = new Soldier();
             s1.setId(1L);
             s1.setName("Fighter");
@@ -82,7 +115,7 @@ public class BattleServiceImplTest {
         ba2.setId(2);
         ba2.setPlayerId(2);
         Map<Integer,Unit> l2 = new HashMap<>();
-        for(int i= 0;i<10;i++) {
+        for(int i= 0;i<numberOfSoldiers;i++) {
             Soldier s2 = new Soldier();
             s2.setId(1L);
             s2.setName("Fighter");

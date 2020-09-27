@@ -8,6 +8,7 @@ import com.dnd.dndbattle.model.Unit;
 
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,13 @@ import java.util.Map;
 public class BattleArmyCreationServiceImpl implements BattleArmyCreationService, InitializingBean {
 
     private Map<Integer,BattleArmy> armies = new HashMap<>();
+
+    private String csvPath;
+
+    @Value("${csvPath}")
+    public void setCsvPath(String csvPath) {
+        this.csvPath = csvPath;
+    }
 
     @Override
     public void afterPropertiesSet() throws Exception {
@@ -49,6 +57,26 @@ public class BattleArmyCreationServiceImpl implements BattleArmyCreationService,
         l.put(1,u);
         ba.setUnits(l);
         armies.put(1,ba);
+
+        BattleArmy ba2 = new BattleArmy();
+        ba2.setId(2);
+        ba2.setPlayerId(2);
+        Soldier s2 = new Soldier();
+        s2.setId(1L);
+        s2.setName("Fighter");
+        s2.setAc(14);
+        s2.setBab(1);
+        s2.setDamage(8);
+        s2.setStr(16);
+        s2.setDex(15);
+        s2.setCon(14);
+        s2.setHd(10);
+        s2.setLevel(1);
+        Unit u2 = new Unit(s2);
+        Map<Integer,Unit> l2 = new HashMap<>();
+        l2.put(1,u2);
+        ba2.setUnits(l2);
+        armies.put(2,ba2);
     }
 
     @Override

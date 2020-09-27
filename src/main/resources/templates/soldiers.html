@@ -18,6 +18,18 @@
 
 <body>
 <div class="container">
+    <div class="menu">
+        <h2> Menu</h2>
+        <table class="table table-striped">
+            <tr>
+                <th> <a th:href="${'/armies'}">Armies</a> </th>
+                <th> <a th:href="${'/soldiers'}">Soldiers</a> </th>
+                <th> <a th:href="${'/battle'}">battle</a> </th>
+
+            </tr>
+        </table>
+    </div>
+
     <div th:if="${not #lists.isEmpty(soldiers)}">
         <h2> Soldier Lists</h2>
         <table class="table table-striped">

@@ -18,6 +18,19 @@
 
 <body>
 <div class="container">
+    <div class="menu">
+        <h2> Menu</h2>
+        <table class="table table-striped">
+            <tr>
+                <th> <a th:href="${'/armies'}">Armies</a> </th>
+                <th> <a th:href="${'/soldiers'}">Soldiers</a> </th>
+                <th> <a th:href="${'/battle'}">battle</a> </th>
+
+
+            </tr>
+        </table>
+    </div>
+
     <div th:if="${not #lists.isEmpty(armies)}">
         <h2> Army Lists</h2>
         <table class="table table-striped">
@@ -32,7 +45,7 @@
                 <td th:text="${ch.id}"></td>
                 <td th:text="${ch.playerId}"></td>
                 <td th:text="${ch.units.size()}"></td>
-                <!--<td th:text="${ch.units.get(0).getType()}"></td> FIX ME -->
+                <td th:if="${ch.units[1] != null && ch.units[1].type != null}" th:text="${ch.units[1].type}">Dead</td>
 
                 <td> <a th:href="${'/army/' + ch.id}">View</a> </td>
                 <td> <a th:href="${'/army/edit/' + ch.id}">Edit</a> </td>
@@ -41,13 +54,14 @@
 
         </table>
 
-        <div class="row">
-            <div class="col-sm-3">
-                <a th:href="${'/army/new'}"> New Army</a>
-            </div>
-        </div>
-
     </div>
+
+    <div class="row">
+        <div class="col-sm-3">
+            <a th:href="${'/army/new'}"> New Army</a>
+        </div>
+    </div>
+
 
 </div>
 </body>

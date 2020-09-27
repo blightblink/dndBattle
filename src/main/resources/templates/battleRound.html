@@ -25,7 +25,7 @@
                 <tr>
                     <th> <a th:href="${'/armies'}">Armies</a> </th>
                     <th> <a th:href="${'/soldiers'}">Soldiers</a> </th>
-                    <th> <a th:href="${'/battleRound'}">battle</a> </th>
+                    <th> <a th:href="${'/battleRound'}">Battle</a> </th>
 
                 </tr>
             </table>
@@ -45,17 +45,30 @@
                     <td th:text="${ch.id}"></td>
                     <td th:text="${ch.playerId}"></td>
                     <td th:text="${ch.units.size()}"></td>
-                    <td th:text="${ch.units[1].type}"></td>
+                    <td th:if="${ch.units[1] != null && ch.units[1].type != null}" th:text="${ch.units[1].type}">Dead</td>
+                    <!--<td th:text="${ch.units[1].type}"></td>-->
                 </tr>
             </table>
-
         </div>
 
-        <div class="row">
-            <div class="col-sm-3">
-                <a th:href="${'/battleRound'}"> battle</a>
+
+        <div th:if="${not #lists.isEmpty(logs)}" >
+            <h2> Logging</h2>
+            <div style="height:600px;overflow:auto;">
+            <table class="table table-striped" >
+                <tr>
+                    <th>Severity</th>
+                    <th>Log</th>
+
+                </tr>
+                <tr th:each="ch : ${logs}">
+                    <td th:text="${ch.severity}"></td>
+                    <td th:text="${ch.text}"></td>
+                </tr>
+            </table>
             </div>
         </div>
+
     </div>
 
 </div>

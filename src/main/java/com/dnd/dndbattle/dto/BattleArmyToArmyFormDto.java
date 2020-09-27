@@ -22,7 +22,9 @@ public class BattleArmyToArmyFormDto {
         dto.setArmyId(battleArmy.getId());
         dto.setPlayerId(battleArmy.getPlayerId());
         dto.setSize(size);
-        dto.setSoldierId(Math.toIntExact(soldier.getId()));
+        if(soldier !=null){
+            dto.setSoldierId(Math.toIntExact(soldier.getId()));
+        }
 
         return dto;
     }
