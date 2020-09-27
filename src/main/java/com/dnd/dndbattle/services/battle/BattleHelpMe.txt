@@ -1,0 +1,16 @@
+
+battle service steps for battle
+
+we need to hold information on an object for
+
+a) armies -> soldiers -> Hp of the soldiers
+b) attack
+
+
+-----------
+battle simulator starts the round we need
+1) armies that will battle
+2) initiative strategy for the players - who attacks first
+3) initiative strategy for the armies - which armies will attack
+
+

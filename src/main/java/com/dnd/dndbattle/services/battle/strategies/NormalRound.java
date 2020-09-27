@@ -19,7 +19,7 @@ public class NormalRound implements InitiativeStrategy {
         List<Integer> battleArmies = armies.values().stream().flatMap( list -> list.stream()).map(BattleArmy::getId).collect(Collectors.toList());
 
         SortedMap<Integer,List<Integer>> initiatives =  new TreeMap<>();
-        initiatives.put(999,battleArmies);
+        initiatives.put(999,battleArmies); //every army same initiative
 
         return initiatives;
     }

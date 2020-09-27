@@ -7,6 +7,7 @@ import com.dnd.dndbattle.services.battle.strategies.InitiativeStrategy;
 
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -22,6 +23,7 @@ public class BattleServiceImpl implements BattleService {
     private Map<Integer, Integer> initiative;
     private int turn = 0;
     private Turn.TurnBuilder currentTurn;
+    private List<TurnLogs> logs = new ArrayList<>();
 
 
     @Override
@@ -54,77 +56,11 @@ public class BattleServiceImpl implements BattleService {
     @Override
     public void battleRound(){
         Turn turn = currentTurn.build();
-        SortedMap<Integer, List<Integer>> initiatives = turn.getInitiativeMap();
-        Iterator iterator = initiatives.keySet().iterator();
+        BattleSimulator simulator = new BattleSimulator(turn);
+        simulator.battle();
 
-        while (iterator.hasNext()){
-            Integer key = (Integer) iterator.next();
-            armiesAttacking(initiatives.get(key));
-            armies.values().forEach( i-> i.stream().forEach( b ->{
-                System.out.println(b.getId() + " " +b.getUnits().size());
-            }));
-            armiesLoseUnits(initiatives.get(key));
-            armies.values().forEach( i-> i.stream().forEach( b ->{
-                System.out.println(b.getId() + " " +b.getUnits().size());
-            }));
-            System.out.println("End of turn \n");
-        }
-    }
+        logs.add(simulator.getTurnLogs());
 
-    private void armiesAttacking(List<Integer> armies){
-        Turn turn = currentTurn.build();
-        Map<Integer, Integer> attackingArmies = turn.getAttackingDefendingArmies();
-
-        //TODO filter with the armies
-        attackingArmies.forEach( (k,v) -> damagingArmy(k,v));
-    }
-
-    private void damagingArmy(Integer fromArmy, Integer toArmy){
-        Turn turn = currentTurn.build();
-        final BattleArmy attacker = turn.getArmyMap().get(fromArmy);
-        final BattleArmy defender = turn.getArmyMap().get(toArmy);
-
-        final Integer attackingUnits = attacker.calculateAttackingUnits();
-
-        for( int i = 0; i < attackingUnits; i++){
-            unitFromAtmyAttack(attacker,defender);
-        }
-
-    }
-
-    private void unitFromAtmyAttack(BattleArmy attacker, BattleArmy defender){
-        final Unit attackingUnit = attacker.getUnits().values().stream().collect(Collectors.toList()).get(0); //TODO better selection of units
-        if(attackingUnit == null){
-            return;
-        }
-
-        final int attackRoll = attackingUnit.attackRoll();
-        final int damageRoll = attackingUnit.damageRoll();
-
-        final BattleArmy damagedArmy = BattleArmy.copyArmy(defender);
-
-        if(defender.getUnits().size() > 0){
-            System.out.println("Attack Roll:" + attackRoll + " Damage Roll:" + damageRoll);
-            Unit defendingUnit = defender.getAliveUnit();
-
-            if(defendingUnit != null){
-                defendingUnit.receivedAttack(attackRoll,damageRoll);
-                if(defendingUnit.isDeadUnit()){
-                    System.out.println("Unit Died from army !!" + damagedArmy.getId());
-                    //damagedArmy.getUnits().remove(defendingUnit);
-                }
-            }
-        }
-        currentTurn.addDamagedArmy(damagedArmy);
-    }
-
-    private void armiesLoseUnits(List<Integer> armies2) {
-        Turn turn = currentTurn.build();
-        List<BattleArmy> armies = turn.getArmyMap().values().stream().filter(x -> armies2.contains(x.getId())).collect(Collectors.toList());
-        armies.forEach(/* i -> {
-            List<Unit> survivingUnits = new ArrayList<>(i.getUnits().stream().filter( y -> !y.isDeadUnit()).collect(Collectors.toList()));
-            i.setUnits(survivingUnits);}}*/
-            BattleArmy::removeDeadUnits);
     }
 
     public void endCurrentTurn(){
@@ -135,6 +71,9 @@ public class BattleServiceImpl implements BattleService {
     public Turn.TurnBuilder getCurrentTurn() {
         return currentTurn;
     }
-}
 
+    public List<TurnLogs> getLogs() {
+        return logs;
+    }
+}
 

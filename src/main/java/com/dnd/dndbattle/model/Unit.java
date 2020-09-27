@@ -53,11 +53,13 @@ public class Unit {
         return DiceUtil.rollDice(baseWeapon) + statModifiers.get(AbilityScores.STR);
     }
 
-    public void receivedAttack(int attackRoll, int damageRoll){
+    public boolean receivedAttack(int attackRoll, int damageRoll){
         if(attackRoll >= baseAc){
             curHp = curHp - damageRoll;
             System.out.println("curHp = " + curHp);
+            return true;
         }
+        return false;
     }
 
     public boolean isDeadUnit(){
