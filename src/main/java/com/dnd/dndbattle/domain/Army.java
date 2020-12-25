@@ -10,18 +10,18 @@ import javax.persistence.Id;
 public class Army {
 
     @Id
-    Integer id;
+    Long id;
 
     int player;
 
     @ElementCollection(targetClass=Integer.class)
     List<Integer> soldiers;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

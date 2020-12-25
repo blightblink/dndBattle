@@ -11,17 +11,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/*
 @Service
+*/
 public class SoldierServiceImpl implements SoldierService{
 
-    private Map<Integer, Soldier> soldiers = new HashMap<>();
+    private Map<Long, Soldier> soldiers = new HashMap<>();
 
-    private String csvPath;
-
-    @Value("${csvPath}")
-    public void setCsvPath(String csvPath) {
-        this.csvPath = csvPath;
-    }
 
     public SoldierServiceImpl() {
         loadSoldiers();
@@ -33,7 +29,7 @@ public class SoldierServiceImpl implements SoldierService{
     }
 
     @Override
-    public Soldier getById(Integer id) {
+    public Soldier getById(Long id) {
         return soldiers.get(id);
     }
 
@@ -43,7 +39,7 @@ public class SoldierServiceImpl implements SoldierService{
             if(soldier.getId() == null){
                 soldier.setId((long) getNextId());
             }
-            soldiers.put(Math.toIntExact(soldier.getId()),soldier);
+            soldiers.put(soldier.getId(),soldier);
             return soldier;
         }
         else {
@@ -52,7 +48,7 @@ public class SoldierServiceImpl implements SoldierService{
     }
 
     @Override
-    public void deleteById(Integer id) {
+    public void deleteById(Long id) {
         soldiers.remove(id);
     }
 
@@ -73,7 +69,7 @@ public class SoldierServiceImpl implements SoldierService{
         s1.setCon(14);
         s1.setHd(10);
         s1.setLevel(1);
-        soldiers.put(1,s1);
+        soldiers.put(1L,s1);
 
         Soldier s2 = new Soldier();
         s2.setId(2L);
@@ -86,11 +82,11 @@ public class SoldierServiceImpl implements SoldierService{
         s2.setCon(14);
         s2.setHd(10);
         s2.setLevel(1);
-        soldiers.put(2,s2);
+        soldiers.put(2L,s2);
 
     }
 
-    private int getNextId(){
+    private long getNextId(){
         return Collections.max(soldiers.keySet()) + 1;
     }
 }

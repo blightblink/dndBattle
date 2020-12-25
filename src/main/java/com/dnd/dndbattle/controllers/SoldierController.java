@@ -28,7 +28,7 @@ public class SoldierController {
     }
 
     @RequestMapping("/soldier/{id}")
-    public String getSoldier( @PathVariable Integer id, Model model){
+    public String getSoldier( @PathVariable Long id, Model model){
         model.addAttribute("soldier",soldierService.getById(id));
         return "soldier";
 
@@ -42,7 +42,7 @@ public class SoldierController {
     }
 
     @RequestMapping("/soldier/edit/{id}")
-    public String editSoldier(@PathVariable Integer id, Model model) {
+    public String editSoldier(@PathVariable Long id, Model model) {
         model.addAttribute("soldier",soldierService.getById(id));
         return "soldierForm";
     }
@@ -54,7 +54,7 @@ public class SoldierController {
     }
 
     @RequestMapping("/soldier/delete/{id}")
-    public String deleteSoldier(@PathVariable Integer id){
+    public String deleteSoldier(@PathVariable Long id){
         soldierService.deleteById(id);
         return "redirect:/soldiers";
     }

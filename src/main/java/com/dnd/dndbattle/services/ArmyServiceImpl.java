@@ -13,7 +13,7 @@ import java.util.Map;
 @Service
 public class ArmyServiceImpl implements ArmyService {
 
-    private Map<Integer,Army> armyMap = new HashMap<>();
+    private Map<Long,Army> armyMap = new HashMap<>();
 
     public ArmyServiceImpl() {
         loadArmies();
@@ -25,7 +25,7 @@ public class ArmyServiceImpl implements ArmyService {
     }
 
     @Override
-    public Army getById(Integer id) {
+    public Army getById(Long id) {
         return armyMap.get(id);
     }
 
@@ -35,7 +35,7 @@ public class ArmyServiceImpl implements ArmyService {
             if(army.getId() == null){
                 army.setId(getNextId());
             }
-            armyMap.put(Math.toIntExact(army.getId()),army);
+            armyMap.put(army.getId(),army);
 
         } else {
             throw new RuntimeException("Null army !!");
@@ -44,7 +44,7 @@ public class ArmyServiceImpl implements ArmyService {
     }
 
     @Override
-    public void deleteById(Integer id) {
+    public void deleteById(Long id) {
         armyMap.remove(id);
     }
 
@@ -52,7 +52,7 @@ public class ArmyServiceImpl implements ArmyService {
 
     }
 
-    private int getNextId(){
+    private long getNextId(){
         return Collections.max(armyMap.keySet()) + 1;
     }
 }

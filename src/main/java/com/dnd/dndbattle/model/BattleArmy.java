@@ -22,6 +22,9 @@ public class BattleArmy {
     public BattleArmy(Integer id) {
         this.id = id;
     }
+    public BattleArmy(Integer id,int playerId,int size, Unit e) {
+        this.id = id;
+    }
 
     public Integer getId() {
         return id;

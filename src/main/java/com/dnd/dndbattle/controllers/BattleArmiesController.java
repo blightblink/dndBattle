@@ -53,20 +53,21 @@ public class BattleArmiesController {
 
     @RequestMapping(value = "/army", method = RequestMethod.POST)
     public String saveOrUpdateSoldier(ArmyFormDto armyFormDto){
-        BattleArmy army = battleArmyCreationService.createOrUpdateBattleArmy(armyFormDto.getArmyId(),soldierService.getById(armyFormDto.getSoldierId()),armyFormDto.getPlayerId(),armyFormDto.getSize());
+        BattleArmy army = battleArmyCreationService.createOrUpdateBattleArmy(Integer.toUnsignedLong(armyFormDto.getArmyId()),
+                soldierService.getById(Integer.toUnsignedLong(armyFormDto.getSoldierId())),armyFormDto.getPlayerId(),armyFormDto.getSize());
         return "redirect:/army/" + army.getId();
     }
 
     @RequestMapping("/army/{id}")
     public String getSoldier( @PathVariable Integer id, Model model){
-        model.addAttribute("battleArmy",battleArmyCreationService.getById(id));
+        model.addAttribute("battleArmy",battleArmyCreationService.getById(Integer.toUnsignedLong(id)));
         return "army";
 
     }
 
     @RequestMapping("/army/edit/{id}")
     public String editSoldier(@PathVariable Integer id, Model model) {
-        BattleArmy army = battleArmyCreationService.getById(id);
+        BattleArmy army = battleArmyCreationService.getById(Integer.toUnsignedLong(id));
         Soldier soldier = null;
         if(army.getUnits().get(1) != null){
             soldier = soldierService.getByName(army.getUnits().get(1).getType());//FIXME the whole first unit thing
@@ -89,9 +90,13 @@ public class BattleArmiesController {
 
     @RequestMapping("/army/delete/{id}")
     public String deleteSoldier(@PathVariable Integer id){
-        battleArmyCreationService.deleteById(id);
+        battleArmyCreationService.deleteById(Integer.toUnsignedLong(id));
         return "redirect:/armies";
     }
 
-
+    //TODO Move to another controller
+    @RequestMapping("/")
+    public String homepage(){
+        return "homepage";
+    }
 }

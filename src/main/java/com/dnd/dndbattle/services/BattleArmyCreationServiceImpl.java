@@ -12,6 +12,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Service;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -24,6 +28,8 @@ public class BattleArmyCreationServiceImpl implements BattleArmyCreationService,
     private Map<Integer,BattleArmy> armies = new HashMap<>();
 
     private String csvPath;
+    private String           csvSplitBy = ",";
+    private String           line       = "";
 
     @Value("${csvPath}")
     public void setCsvPath(String csvPath) {
@@ -38,6 +44,7 @@ public class BattleArmyCreationServiceImpl implements BattleArmyCreationService,
     }
 
     public BattleArmyCreationServiceImpl() {
+        loadArmies();
         BattleArmy ba = new BattleArmy();
         ba.setId(1);
         ba.setPlayerId(1);
@@ -85,12 +92,12 @@ public class BattleArmyCreationServiceImpl implements BattleArmyCreationService,
     }
 
     @Override
-    public BattleArmy getById(Integer id) {
+    public BattleArmy getById(Long id) {
         return armies.get(id);
     }
 
     @Override
-    public void deleteById(Integer id) {
+    public void deleteById(Long id) {
         armies.remove(id);
     }
 
@@ -114,7 +121,7 @@ public class BattleArmyCreationServiceImpl implements BattleArmyCreationService,
 
 
     @Override
-    public BattleArmy createOrUpdateBattleArmy(Integer armyId, Soldier soldier, Integer playerId, int size) {
+    public BattleArmy createOrUpdateBattleArmy(Long armyId, Soldier soldier, Integer playerId, int size) {
         BattleArmy army = armyId != null && getById(armyId) != null ? getById(armyId) : new BattleArmy(getNextId());
 
         army.setPlayerId(playerId);
@@ -129,5 +136,26 @@ public class BattleArmyCreationServiceImpl implements BattleArmyCreationService,
         saveOrUpdate(army);
 
         return army;
+    }
+
+    private void loadArmies() {
+        try {
+            BufferedReader br =new BufferedReader(new FileReader("C:\\Users\\chatzigeorgiou\\tutorials\\dndbattle\\src\\main\\resources\\csv\\armies.csv"));
+            int i=0;
+            while ((line = br.readLine()) != null) {
+                if(i!= 0){
+
+                    /*BattleArmy ba = new BattleArmy(line.split(csvSplitBy));
+                    sysMarketTypeUF marketType = new sysMarketTypeUF(line.split(csvSplitBy));
+                    sysMarketUF.add(marketType);*/
+                }
+                i++;
+            }
+            File f = new File("armies.csv");
+            /*Files.readAllLines(new File(csvPath + "\\armies.csv").toPath()).stream().forEach(l -> {
+            });*/
+        } catch (Exception e){
+            System.out.println("Damn, this" );
+        }
     }
 }
